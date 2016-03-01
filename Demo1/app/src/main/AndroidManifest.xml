@@ -3,6 +3,7 @@
     package="com.csie.nfc.demo1">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <uses-feature
         android:name="android.hardware.nfc"
