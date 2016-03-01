@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.telephony.SmsManager;
 import android.widget.TextView;
 import org.w3c.dom.Text;
+import android.widget.Button;
+import android.view.View;
+import android.widget.Toast;
 
 public class CardActivity extends AppCompatActivity {
 
@@ -43,12 +46,25 @@ public class CardActivity extends AppCompatActivity {
         else if(consoleName.equals("mastersystem")) cardResId = R.drawable.mastersystem;
     }
 
-    private void sendSMS(String phonenumber, String message, boolean isBinary) {
-        SmsManager manager = SmsManager.getDefault();
+    private void sendSMS(final String phonenumber, final String message, boolean isBinary) {
+        Button sendBtn;
+        sendBtn = (Button) findViewById(R.id.button);
 
-        manager.sendTextMessage(phonenumber, null, "test Message", null, null);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phonenumber, null, message, null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                }
 
-
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
+
 }
