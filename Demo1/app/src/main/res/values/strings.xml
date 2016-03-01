@@ -4,4 +4,5 @@
     <string name="write_a_new_tag">Click to write a new tag</string>
     <string name="phone_number">Phone Number</string>
     <string name="person_name">Name</string>
+    <string name="send_text">Notify Customer</string>
 </resources>

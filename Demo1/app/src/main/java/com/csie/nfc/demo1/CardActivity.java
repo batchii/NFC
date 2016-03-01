@@ -8,10 +8,13 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class CardActivity extends AppCompatActivity {
 
-    private ImageView mCardView;
+    private TextView nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +22,7 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
 
         // ImageView that we'll use to display cards
-        mCardView = (ImageView)findViewById(R.id.card_view);
+        nameTextView = (TextView)findViewById(R.id.nameCard);
 
         // see if app was started from a tag and show game console
         Intent intent = getIntent();
@@ -38,6 +41,5 @@ public class CardActivity extends AppCompatActivity {
         else if(consoleName.equals("snes")) cardResId = R.drawable.snes;
         else if(consoleName.equals("megadrive")) cardResId = R.drawable.megadrive;
         else if(consoleName.equals("mastersystem")) cardResId = R.drawable.mastersystem;
-        mCardView.setImageResource(cardResId);
     }
 }
