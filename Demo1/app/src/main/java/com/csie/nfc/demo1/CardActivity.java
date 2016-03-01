@@ -8,6 +8,8 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.telephony.SmsManager;
+import android.app.PendingIntent;
 
 public class CardActivity extends AppCompatActivity {
 
@@ -39,5 +41,14 @@ public class CardActivity extends AppCompatActivity {
         else if(consoleName.equals("megadrive")) cardResId = R.drawable.megadrive;
         else if(consoleName.equals("mastersystem")) cardResId = R.drawable.mastersystem;
         mCardView.setImageResource(cardResId);
+    }
+
+    private void sendSMS(String phonenumber, String message, boolean isBinary) {
+        SmsManager manager = SmsManager.getDefault();
+
+        manager.sendTextMessage(phonenumber, null, "test Message", null, null);
+
+
+
     }
 }
