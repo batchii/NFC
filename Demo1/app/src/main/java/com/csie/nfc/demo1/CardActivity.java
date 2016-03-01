@@ -42,6 +42,15 @@ public class CardActivity extends AppCompatActivity {
             phoneString = new String(phoneRecord.getPayload());
             displayDetails();
         }
+
+        Button sendBtn;
+        sendBtn = (Button) findViewById(R.id.button);
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                sendSMS();
+            }
+        });
     }
 
     private void displayDetails() {
@@ -53,24 +62,21 @@ public class CardActivity extends AppCompatActivity {
         }
     }
 
-    private void sendSMS(final String phonenumber, final String message, boolean isBinary) {
-        Button sendBtn;
-        sendBtn = (Button) findViewById(R.id.button);
+    private void sendSMS() {
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(phonenumber, null, message, null, null);
-                    Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
-                }
+        String phoneNo = phoneString;
+        String message = "TESTTTTTINGGG";
 
-                catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, message, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 
