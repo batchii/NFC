@@ -1,6 +1,7 @@
 package com.csie.nfc.demo1;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -11,9 +12,11 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -95,12 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NdefRecord appRecord = NdefRecord.createApplicationRecord("com.csie.nfc.demo1");
 
         // record that contains our custom "retro console" game data, using custom MIME_TYPE
-        byte[] payload = getRandomConsole().getBytes();
+        byte[] name = getName().getBytes();
+        byte[] phoneNumber = getPhoneNumber().getBytes();
         byte[] mimeBytes = MimeType.NFC_DEMO.getBytes(Charset.forName("US-ASCII"));
         Log.d("mimetype: ", MimeType.NFC_DEMO);
-        NdefRecord cardRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, mimeBytes,
-                new byte[0], payload);
-        NdefMessage message = new NdefMessage(new NdefRecord[] { cardRecord, appRecord});
+        NdefRecord nameRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, mimeBytes,
+                new byte[0], name);
+        NdefRecord phoneNumberRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], phoneNumber);
+        NdefMessage message = new NdefMessage(new NdefRecord[] { nameRecord, appRecord, phoneNumberRecord});
 
         try {
             // see if tag is already NDEF formatted
@@ -146,6 +151,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return false;
+    }
+
+    private String getName(){
+        EditText nameField = (EditText)findViewById(R.id.person_name);
+        return nameField.getText().toString();
+    }
+
+    private String getPhoneNumber(){
+        EditText phoneField = (EditText)findViewById(R.id.phone_number);
+        if(phoneField.getText().toString() == null){
+            //Get this phone's phone number
+            TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+            String mPhoneNumber = tMgr.getLine1Number();
+            return mPhoneNumber;
+        } else {
+            return phoneField.getText().toString();
+        }
     }
 
     private String getRandomConsole() {

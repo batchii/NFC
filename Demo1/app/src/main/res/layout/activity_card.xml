@@ -8,10 +8,40 @@
     android:padding="25dp"
     >
 
-    <ImageView
-        android:id="@+id/card_view"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom">
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/console_card"/>
+        android:text="@string/send_text"
+        android:id="@+id/button"
+        android:layout_gravity="right|bottom" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/person_name"
+        android:id="@+id/nameCard"
+        android:textSize="48px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="left|top"
+        android:layout_toLeftOf = "@+id/button"
+        />
+
+    <TextView
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_number"
+        android:id="@+id/textView"
+        android:layout_gravity="left|bottom"
+        android:layout_toLeftOf = "@+id/button"
+        />
+
 </FrameLayout>
