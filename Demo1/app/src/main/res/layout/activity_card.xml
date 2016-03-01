@@ -39,7 +39,7 @@
         android:layout_width="214dp"
         android:layout_height="wrap_content"
         android:text="@string/phone_number"
-        android:id="@+id/textView"
+        android:id="@+id/phoneNumberCard"
         android:layout_gravity="left|bottom"
         android:layout_toLeftOf = "@+id/button"
         />
