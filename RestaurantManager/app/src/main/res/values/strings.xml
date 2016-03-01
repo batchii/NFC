@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">RestaurantManager</string>
-    <string name="action_settings">Settings</string>
-    <string name="explanation">Explanation</string>
-    <string name="title_activity_check_in">CheckInActivity</string>
-</resources>
