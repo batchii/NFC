@@ -9,8 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.telephony.SmsManager;
 import android.widget.TextView;
-
 import org.w3c.dom.Text;
 
 public class CardActivity extends AppCompatActivity {
@@ -48,5 +48,14 @@ public class CardActivity extends AppCompatActivity {
         } else {
             Log.e("Something misread", "Misread");
         }
+    }
+
+    private void sendSMS(String phonenumber, String message, boolean isBinary) {
+        SmsManager manager = SmsManager.getDefault();
+
+        manager.sendTextMessage(phonenumber, null, "test Message", null, null);
+
+
+
     }
 }
