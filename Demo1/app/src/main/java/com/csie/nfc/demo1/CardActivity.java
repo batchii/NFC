@@ -65,7 +65,7 @@ public class CardActivity extends AppCompatActivity {
     private void sendSMS() {
 
         String phoneNo = phoneString;
-        String message = "Your table is ready!";
+        String message = nameString + ": Your table is ready!";
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
