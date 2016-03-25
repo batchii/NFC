@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Customer App</string>
+    <string name="icon_content_description">Hello blank fragment</string>
+    <string name="console_card">Console card</string>
+    <string name="write_a_new_tag">Click to write a new tag</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="person_name">Name</string>
+    <string name="send_text">Notify Customer</string>
+    <string name="service_name">CardEmulation Sample</string>
+    <string name="account_number">Account Number</string>
+    <string name="card_title">Sample Loyalty Card</string>
+
+</resources>

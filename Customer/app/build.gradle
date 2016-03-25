@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.csie.nfc.customer"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -25,5 +25,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.joanzapata.android:android-iconify:1.0.9'
     compile 'com.google.android.gms:play-services:8.4.0'
+    compile "com.android.support:support-v4:23.1.0"
+    compile "com.android.support:support-v13:23.1.0"
+    compile "com.android.support:cardview-v7:23.1.0"
 
 }
