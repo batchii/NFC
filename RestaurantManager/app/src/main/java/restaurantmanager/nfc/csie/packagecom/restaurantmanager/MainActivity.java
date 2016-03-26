@@ -1,5 +1,14 @@
+/** Let the main activity be the list of customers.
+ *
+ *
+ */
+
 package restaurantmanager.nfc.csie.packagecom.restaurantmanager;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.ArrayAdapter;
+
+import android.nfc.NfcAdapter;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private NfcAdapter mNfcAdapter;
+    private ListView listOfCustomers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +36,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        listOfCustomers = (ListView) findViewById(R.id.list);
+
+        this.setupList(listOfCustomers);
+
+        //Checks if NFC capabilities are there.
+        //Commented out for testing purposes
+        //ie. emulators can't do jack shit with NFC
+//        if (mNfcAdapter == null) {
+//            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+//            finish();
+//            return;
+//
+//        }
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     @Override
@@ -49,4 +82,23 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void setupList(ListView listOfCustomers) {
+        String[] headers = new String[]{"Name", "Party Size"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, headers);
+        listOfCustomers.setAdapter(adapter);
+
+    }
+
+
+    //method to read NFC data
+
+    //method to parse NFC data
+
+    //method to insert the data into the listview
+
+
 }
