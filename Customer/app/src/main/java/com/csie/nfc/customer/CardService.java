@@ -20,9 +20,8 @@ import android.content.Context;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
-
-import com.csie.nfc.customer.common.logger.Log;
 
 import java.util.Arrays;
 
@@ -63,7 +62,7 @@ public class CardService extends HostApduService {
      * @param reason Either DEACTIVATION_LINK_LOSS or DEACTIVATION_DESELECTED
      */
     @Override
-    public void onDeactivated(int reason) { }
+    public void onDeactivated(int reason) {Log.i("Something screwed up", "connection lsot"); }
 
     /**
      * This method will be called when a command APDU has been received from a remote device. A

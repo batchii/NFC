@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.i("account: ", account);
                 Scanner sc = new Scanner(account);
                 String first = sc.next();
                 String second = sc.next();
