@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,8 @@ public class ListViewAdapter extends ArrayAdapter {
             @Override
             public void onClick(View arg0) {
 
+                sendSMS(values.get(position)[2]);
+
                 Toast.makeText(arg0.getContext(), "Texting " + values.get(position)[2], Toast.LENGTH_LONG).show();
                 //Text user on phone number here
                 //delete upon press
@@ -86,6 +89,24 @@ public class ListViewAdapter extends ArrayAdapter {
         });
 
         return v;
+    }
+
+    private void sendSMS(String phoneString) {
+
+        String phoneNo = phoneString;
+        String message = "Your table is ready!";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, message, null, null);
+            Toast.makeText(this.getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(this.getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
     }
 
 }

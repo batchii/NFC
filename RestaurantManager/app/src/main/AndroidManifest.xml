@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="restaurantmanager.nfc.csie.packagecom.restaurantmanager">
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <application
         android:allowBackup="true"
