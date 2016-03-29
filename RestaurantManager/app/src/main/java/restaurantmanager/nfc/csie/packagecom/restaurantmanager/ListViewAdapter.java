@@ -84,6 +84,7 @@ public class ListViewAdapter extends ArrayAdapter {
                 Toast.makeText(arg0.getContext(), "Texting " + values.get(position)[2], Toast.LENGTH_LONG).show();
                 //Text user on phone number here
                 //delete upon press
+                values.remove(position);
 
             }
         });
