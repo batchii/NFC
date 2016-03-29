@@ -115,11 +115,11 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         //TextView txtFourth=(TextView) convertView.findViewById(R.id.button);
 
 
-        String[] headers = new String[]{"Name", "Party Size", "1112234"};
-        String[] test = new String[]{"Katie", "3", "asdf"};
+        String[] headers = new String[]{"Name", "Party Size", "5038041385"};
+        String[] test = new String[]{"Katie", "3", "5038041385"};
         list.add(headers);
         list.add(test);
-        list.add(setData("Alec", "2", "ysr"));
+        list.add(setData("Alec", "2", "9086562784"));
         //Get all information in String[]
         //each entry in the list is a String[]
 
