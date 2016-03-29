@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class ListViewAdapter extends ArrayAdapter {
 
-    private String[] values;
+    private ArrayList<String[]> values;
     Activity activity;
     TextView txt1;
     TextView txt2;
@@ -28,21 +28,21 @@ public class ListViewAdapter extends ArrayAdapter {
 
     //need Button
 
-    public ListViewAdapter(Context context, int textViewResourceId, String[] firstrow) {
+    public ListViewAdapter(Context context, int textViewResourceId, ArrayList<String[]> firstrow) {
         super(context, textViewResourceId);
         this.c = context; //for debugging
         this.values = firstrow;
-        Toast.makeText(this.c, "In ListViewAdapter constructor", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this.c, "In ListViewAdapter constructor", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public int getCount() {
-        return this.values.length;
+        return this.values.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.values[position];
+        return this.values.get(0)[position];
     }
 
     @Override
@@ -52,31 +52,36 @@ public class ListViewAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Toast.makeText(this.c, "In ListViewAdapter getView", Toast.LENGTH_LONG).show();
-        LayoutInflater inflater= (LayoutInflater) this.c
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//        txt1 = (TextView) convertView.findViewById(R.id.name);
-//        TextView txt2;
-//        TextView txt3;
+        View v = convertView;
 
-        Toast.makeText(this.c, values[0], Toast.LENGTH_LONG).show();
+        if (v == null) {
+            LayoutInflater vi;
+            vi = LayoutInflater.from(getContext());
+            v = vi.inflate(R.layout.listcolumns, null);
+        }
 
-        View rowView = inflater.inflate(R.layout.listcolumns, parent, false);
-        TextView nameTV = (TextView) rowView.findViewById(R.id.name);
-        TextView partySizeTV = (TextView) rowView.findViewById(R.id.partysize);
-        nameTV.setText(values[0]);
-        partySizeTV.setText(values[1]);
-        Button buttonID = (Button) rowView.findViewById(R.id.button);
+        TextView nameTV = (TextView) v.findViewById(R.id.name);
+        TextView partySizeTV = (TextView) v.findViewById(R.id.partysize);
+        for (int i = 0; i < values.size(); i++) {
+            nameTV.setText(values.get(i)[0]);
+            partySizeTV.setText(values.get(i)[1]);
 
-        buttonID.setOnClickListener(new View.OnClickListener(){
+            Button buttonID = (Button) v.findViewById(R.id.button);
 
-            @Override
-            public void onClick(View arg0) {
+            buttonID.setOnClickListener(new View.OnClickListener() {
 
-            }});
+                @Override
+                public void onClick(View arg0) {
 
-        return rowView;
+                    Toast.makeText(arg0.getContext(), "Button has been pressed", Toast.LENGTH_LONG).show();
+                    //Text user on phone number here
+
+                }
+            });
+        }
+
+        return v;
     }
 
 }

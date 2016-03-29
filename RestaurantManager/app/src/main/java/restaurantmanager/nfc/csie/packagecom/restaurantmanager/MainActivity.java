@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 
     private NfcAdapter mNfcAdapter;
     private ListView listOfCustomers;
+    final ArrayList<String[]> list = new ArrayList<String[]>();
 
     public static int READER_FLAGS =
             NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
@@ -113,21 +114,22 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         //TextView txtFourth=(TextView) convertView.findViewById(R.id.button);
 
 
-        String[] headers = new String[]{"Name", "Party Size", "Something"};
+        String[] headers = new String[]{"Name", "Party Size"};
+        list.add(headers);
+//        list.add(setData("Katie", "3", "asl;sdlkgd;klal;jk"));
         //Get all information in String[]
         //each entry in the list is a String[]
         //
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < headers.length; ++i) { //CHANGE THIS FOR LOOP AFTER I GET ALL THE NFC DATA!!!
-            list.add(headers[i]);
-        }
+        //CALL setData() here
+//        final ArrayList<String> list = new ArrayList<String>();
+//        for (int i = 0; i < list.size(); ++i) { //CHANGE THIS FOR LOOP AFTER I GET ALL THE NFC DATA!!!
+//            list.add(headers);
+//        }
 
 
-
-
-        final ListAdapter custom = new ListViewAdapter(this, R.layout.listcolumns, headers);
+        final ListAdapter custom = new ListViewAdapter(this, R.layout.listcolumns, list);
         listOfCustomers.setAdapter(custom);
-        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
         listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -198,13 +200,26 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         });
     }
 
+    //insert this string data into List HashMaps whatever,
+    //then into a greater bigger list
+    //which is sent into the adapter
+    //and is dynamically-ish filled
+
+    //everytime onAccountReceived is called
+
+    //phone number connected to button press
+        //deletes that item
+
 
 
 
     //method to insert the data into the listview
 
-    private void setData(String name, String phoneNumber, String partySize){
-
+    private String[] setData(String name, String partySize, String phoneNumber){
+//        return new String[]{"Katie", "3"};
+        return new String[]{name, partySize};
     }
+
+    //
 
 }
