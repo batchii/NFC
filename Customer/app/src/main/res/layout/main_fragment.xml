@@ -49,7 +49,6 @@ limitations under the License.
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:layout_marginTop="40dp"
             />
         <EditText
             android:id="@+id/card_name_field"
@@ -61,7 +60,7 @@ limitations under the License.
             android:textSize="36dp"
             android:singleLine="true"
              />
-        <EditText
+        <TextView
             android:id="@+id/card_number_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,5 +69,12 @@ limitations under the License.
             android:ems="10"
             android:textSize="26dp"
              />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="18dp"
+            android:id="@+id/party_number_field"
+            android:hint="@string/party_size"/>
     </LinearLayout>
 </FrameLayout>

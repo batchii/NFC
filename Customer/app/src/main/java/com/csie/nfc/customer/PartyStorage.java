@@ -29,31 +29,31 @@ import android.util.Log;
  *
  * <p>This class is thread-safe.
  */
-public class AccountStorage {
-    private static final String PREF_ACCOUNT_NUMBER = "account_number";
-    private static final String DEFAULT_ACCOUNT_NUMBER = "John Doe";
-    private static final String TAG = "AccountStorage";
-    private static String sAccount = null;
-    private static final Object sAccountLock = new Object();
+public class PartyStorage {
+    private static final String PREF_PARTY_SIZE = "party_size";
+    private static final String DEFAULT_PARTY_SIZE = "1";
+    private static final String TAG = "PartySize";
+    private static String sParty = null;
+    private static final Object sPartyLock = new Object();
 
-    public static void SetAccount(Context c, String s) {
-        synchronized(sAccountLock) {
+    public static void SetParty(Context c, String s) {
+        synchronized(sPartyLock) {
             Log.i(TAG, "Setting account number: " + s);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-            prefs.edit().putString(PREF_ACCOUNT_NUMBER, s).commit();
-            sAccount = s;
+            prefs.edit().putString(PREF_PARTY_SIZE, s).commit();
+            sParty = s;
         }
     }
 
-    public static String GetAccount(Context c) {
-        synchronized (sAccountLock) {
-            if (sAccount == null) {
+    public static String GetParty(Context c) {
+        synchronized (sPartyLock) {
+            if (sParty == null) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-                String account = prefs.getString(PREF_ACCOUNT_NUMBER, DEFAULT_ACCOUNT_NUMBER);
+                String account = prefs.getString(PREF_PARTY_SIZE, DEFAULT_PARTY_SIZE);
 
-                sAccount = account;
+                sParty = account;
             }
-            return sAccount;
+            return sParty;
         }
     }
 

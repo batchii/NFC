@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Generic UI for sample discovery.
@@ -46,13 +47,17 @@ public class CardEmulationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         EditText account = (EditText) v.findViewById(R.id.card_name_field);
-        EditText phoneNumber = (EditText) v.findViewById(R.id.card_number_field);
+        TextView phoneNumber = (TextView) v.findViewById(R.id.card_number_field);
+        EditText partySize = (EditText) v.findViewById(R.id.party_number_field);
         account.setText(AccountStorage.GetAccount(getActivity()));
         account.addTextChangedListener(new AccountUpdater());
         TelephonyManager phoneManager = (TelephonyManager)
                 getActivity().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         String phoneNumberString = phoneManager.getLine1Number();
         phoneNumber.setText(phoneNumberString);
+        partySize.setText(PartyStorage.GetParty(getActivity()));
+        partySize.addTextChangedListener(new PartyUpdater());
+
         return v;
     }
 
@@ -74,4 +79,23 @@ public class CardEmulationFragment extends Fragment {
             AccountStorage.SetAccount(getActivity(), account);
         }
     }
+
+    private class PartyUpdater implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // Not implemented.
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // Not implemented.
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String party = s.toString();
+            PartyStorage.SetParty(getActivity(), party);
+        }
+    }
+
 }

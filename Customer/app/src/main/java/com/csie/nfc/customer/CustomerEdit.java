@@ -1,5 +1,8 @@
 package com.csie.nfc.customer;
 
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,7 +14,7 @@ import com.csie.nfc.customer.common.logger.LogWrapper;
 import com.csie.nfc.customer.common.logger.MessageOnlyLogFilter;
 
 
-public class CustomerEdit extends AppCompatActivity {
+public class CustomerEdit extends FragmentActivity {
 
     public static final String TAG = "MainActivity";
 
@@ -20,6 +23,12 @@ public class CustomerEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_edit);
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            CardEmulationFragment fragment = new CardEmulationFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
+        }
     }
     @Override
     protected  void onStart() {

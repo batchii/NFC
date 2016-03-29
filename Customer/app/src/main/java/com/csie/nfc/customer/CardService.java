@@ -95,7 +95,8 @@ public class CardService extends HostApduService {
             TelephonyManager phoneManager = (TelephonyManager)
                 getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
             String phoneNumberString = phoneManager.getLine1Number();
-            String result = account + " " + phoneNumberString;
+            String partySize = PartyStorage.GetParty(this);
+            String result = account + " " + phoneNumberString + " " + partySize;
             byte[] resultBytes = result.getBytes();
             Log.i(TAG, "Sending account number: " + result);
             return ConcatArrays(resultBytes, SELECT_OK_SW);

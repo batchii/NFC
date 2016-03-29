@@ -7,7 +7,8 @@
     <string name="person_name">Name</string>
     <string name="send_text">Notify Customer</string>
     <string name="service_name">CardEmulation Sample</string>
-    <string name="account_number">Account Number</string>
-    <string name="card_title">Sample Loyalty Card</string>
+    <string name="account_number">Name</string>
+    <string name="card_title">Your Restaurant Card</string>
     <string name="intro_message">Please enter a name</string>
+    <string name="party_size">Party Size</string>
 </resources>
