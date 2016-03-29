@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
     private NfcAdapter mNfcAdapter;
     private ListView listOfCustomers;
     final ArrayList<String[]> list = new ArrayList<String[]>();
+    ListViewAdapter custom;
 
     public static int READER_FLAGS =
             NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
@@ -114,12 +115,14 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         //TextView txtFourth=(TextView) convertView.findViewById(R.id.button);
 
 
-        String[] headers = new String[]{"Name", "Party Size"};
+        String[] headers = new String[]{"Name", "Party Size", "1112234"};
+        String[] test = new String[]{"Katie", "3", "asdf"};
         list.add(headers);
-//        list.add(setData("Katie", "3", "asl;sdlkgd;klal;jk"));
+        list.add(test);
+        list.add(setData("Alec", "2", "ysr"));
         //Get all information in String[]
         //each entry in the list is a String[]
-        //
+
         //CALL setData() here
 //        final ArrayList<String> list = new ArrayList<String>();
 //        for (int i = 0; i < list.size(); ++i) { //CHANGE THIS FOR LOOP AFTER I GET ALL THE NFC DATA!!!
@@ -127,24 +130,16 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 //        }
 
 
-        final ListAdapter custom = new ListViewAdapter(this, R.layout.listcolumns, list);
+        custom = new ListViewAdapter(this, R.layout.listcolumns, list);
         listOfCustomers.setAdapter(custom);
 //        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
-        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-//                                custom.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
+            {
+                int pos=position+1;
+                Toast.makeText(MainActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -194,8 +189,9 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
                 String first = sc.next();
                 String second = sc.next();
                 String third = sc.next();
-                setData(first,second, third);
-
+                String[] toAdd = setData(first,second, third);
+                list.add(toAdd);
+                custom.notifyDataSetChanged();
             }
         });
     }
@@ -217,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 
     private String[] setData(String name, String partySize, String phoneNumber){
 //        return new String[]{"Katie", "3"};
-        return new String[]{name, partySize};
+        return new String[]{name, partySize, phoneNumber};
     }
 
     //

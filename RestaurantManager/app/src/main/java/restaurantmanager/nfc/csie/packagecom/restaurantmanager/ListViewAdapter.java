@@ -42,16 +42,16 @@ public class ListViewAdapter extends ArrayAdapter {
 
     @Override
     public Object getItem(int position) {
-        return this.values.get(0)[position];
+        return this.values.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
 
@@ -63,23 +63,27 @@ public class ListViewAdapter extends ArrayAdapter {
 
         TextView nameTV = (TextView) v.findViewById(R.id.name);
         TextView partySizeTV = (TextView) v.findViewById(R.id.partysize);
-        for (int i = 0; i < values.size(); i++) {
-            nameTV.setText(values.get(i)[0]);
-            partySizeTV.setText(values.get(i)[1]);
 
-            Button buttonID = (Button) v.findViewById(R.id.button);
+        nameTV.setText(values.get(position)[0]);
+        partySizeTV.setText(values.get(position)[1]);
 
-            buttonID.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View arg0) {
 
-                    Toast.makeText(arg0.getContext(), "Button has been pressed", Toast.LENGTH_LONG).show();
-                    //Text user on phone number here
+//        Toast.makeText(this.getContext(), values.get(position)[2], Toast.LENGTH_LONG).show();
 
-                }
-            });
-        }
+        Button buttonID = (Button) v.findViewById(R.id.button);
+
+        buttonID.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Toast.makeText(arg0.getContext(), "Texting " + values.get(position)[2], Toast.LENGTH_LONG).show();
+                //Text user on phone number here
+                //delete upon press
+
+            }
+        });
 
         return v;
     }
