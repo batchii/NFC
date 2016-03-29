@@ -21,6 +21,7 @@ import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import java.util.Arrays;
@@ -42,9 +43,9 @@ import java.util.Arrays;
  * protocol support as needed.
  */
 public class CardService extends HostApduService {
-    private static final String TAG = "RestaurantCard";
+    private static final String TAG = "CardSerivce";
     // AID for our loyalty card service.
-    private static final String SAMPLE_LOYALTY_CARD_AID = "F222222222";
+    private static final String SAMPLE_LOYALTY_CARD_AID = "F222222221";
     // ISO-DEP command HEADER for selecting an AID.
     // Format: [Class | Instruction | Parameter 1 | Parameter 2]
     private static final String SELECT_APDU_HEADER = "00A40400";
@@ -95,9 +96,11 @@ public class CardService extends HostApduService {
                 getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
             String phoneNumberString = phoneManager.getLine1Number();
             String partySize = PartyStorage.GetParty(this);
-            String result = account + " " + phoneNumberString + " " + partySize;
+            Log.i(TAG, "WTF IS GOING ON");
+            String result = account + " " + partySize + " " + phoneNumberString;
             byte[] resultBytes = result.getBytes();
             Log.i(TAG, "Sending account number: " + result);
+            Toast.makeText(this,result,Toast.LENGTH_LONG).show();
             return ConcatArrays(resultBytes, SELECT_OK_SW);
         } else {
             return UNKNOWN_CMD_SW;

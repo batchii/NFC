@@ -60,15 +60,6 @@ limitations under the License.
             android:textSize="36dp"
             android:singleLine="true"
              />
-        <TextView
-            android:id="@+id/card_number_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="@string/phone_number"
-            android:ems="10"
-            android:textSize="26dp"
-             />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,5 +67,15 @@ limitations under the License.
             android:textSize="18dp"
             android:id="@+id/party_number_field"
             android:hint="@string/party_size"/>
+        <TextView
+            android:id="@+id/card_number_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="@string/phone_number"
+            android:ems="10"
+            android:textSize="24dp"
+             />
+
     </LinearLayout>
 </FrameLayout>

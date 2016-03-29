@@ -58,7 +58,7 @@ limitations under the License.
     -->
 
     <aid-group android:description="@string/card_title" android:category="other">
-        <aid-filter android:name="F222222222"/>
+        <aid-filter android:name="F222222221"/>
     </aid-group>
 <!-- END_INCLUDE(CardEmulationXML) -->
 </host-apdu-service>
