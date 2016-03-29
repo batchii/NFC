@@ -85,6 +85,7 @@ public class ListViewAdapter extends ArrayAdapter {
                 //Text user on phone number here
                 //delete upon press
                 values.remove(position);
+                update();
 
             }
         });
@@ -108,6 +109,10 @@ public class ListViewAdapter extends ArrayAdapter {
             e.printStackTrace();
         }
 
+    }
+
+    private void update() {
+        notifyDataSetChanged();
     }
 
 }
