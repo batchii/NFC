@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">RestaurantManager</string>
     <string name="action_settings">Settings</string>
+    <string name="account_number">Account Number</string>
+    <string name="card_title">Sample Loyalty Card</string>
+
 </resources>

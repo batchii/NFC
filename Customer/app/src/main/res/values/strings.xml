@@ -9,5 +9,5 @@
     <string name="service_name">CardEmulation Sample</string>
     <string name="account_number">Account Number</string>
     <string name="card_title">Sample Loyalty Card</string>
-
+    <string name="intro_message">Please enter a name</string>
 </resources>

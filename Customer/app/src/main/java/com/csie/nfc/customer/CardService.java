@@ -16,8 +16,10 @@
 
 package com.csie.nfc.customer;
 
+import android.content.Context;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 
 
 import com.csie.nfc.customer.common.logger.Log;
@@ -41,7 +43,7 @@ import java.util.Arrays;
  * protocol support as needed.
  */
 public class CardService extends HostApduService {
-    private static final String TAG = "CardService";
+    private static final String TAG = "RestaurantCard";
     // AID for our loyalty card service.
     private static final String SAMPLE_LOYALTY_CARD_AID = "F222222222";
     // ISO-DEP command HEADER for selecting an AID.
@@ -90,9 +92,13 @@ public class CardService extends HostApduService {
         // send the loyalty card account number, followed by a SELECT_OK status trailer (0x9000).
         if (Arrays.equals(SELECT_APDU, commandApdu)) {
             String account = AccountStorage.GetAccount(this);
-            byte[] accountBytes = account.getBytes();
-            Log.i(TAG, "Sending account number: " + account);
-            return ConcatArrays(accountBytes, SELECT_OK_SW);
+            TelephonyManager phoneManager = (TelephonyManager)
+                getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+            String phoneNumberString = phoneManager.getLine1Number();
+            String result = account + " " + phoneNumberString;
+            byte[] resultBytes = result.getBytes();
+            Log.i(TAG, "Sending account number: " + result);
+            return ConcatArrays(resultBytes, SELECT_OK_SW);
         } else {
             return UNKNOWN_CMD_SW;
         }
