@@ -15,15 +15,20 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 
 import android.nfc.NfcAdapter;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         setSupportActionBar(toolbar);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        listOfCustomers = (ListView) findViewById(R.id.list);
+        listOfCustomers = (ListView) findViewById(R.id.listView);
 
         this.setupList(listOfCustomers);
         mLoyaltyCardReader = new LoyaltyCardReader(this);
@@ -96,11 +101,51 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 
 
     private void setupList(ListView listOfCustomers) {
-        String[] headers = new String[]{"Name", "Party Size"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, headers);
-        listOfCustomers.setAdapter(adapter);
+        LayoutInflater inflater=this.getLayoutInflater();
+
+        View convertView=inflater.inflate(R.layout.listcolumns, null);
+
+        TextView txtFirst =(TextView) convertView.findViewById(R.id.name);
+        TextView txtSecond = (TextView) convertView.findViewById(R.id.partysize);
+        //TextView txtThird=(TextView) convertView.findViewById(R.id.phonenumber);
+        //Button
+        //TextView txtFourth=(TextView) convertView.findViewById(R.id.button);
+
+
+        String[] headers = new String[]{"Name", "Party Size", "Something"};
+        //Get all information in String[]
+        //each entry in the list is a String[]
+        //
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < headers.length; ++i) { //CHANGE THIS FOR LOOP AFTER I GET ALL THE NFC DATA!!!
+            list.add(headers[i]);
+        }
+
+
+
+
+        final ListAdapter custom = new ListViewAdapter(this, R.layout.listcolumns, headers);
+        listOfCustomers.setAdapter(custom);
+        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
+        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                view.animate().setDuration(2000).alpha(0)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                list.remove(item);
+//                                custom.notifyDataSetChanged();
+                                view.setAlpha(1);
+                            }
+                        });
+            }
+
+        });
 
     }
 
