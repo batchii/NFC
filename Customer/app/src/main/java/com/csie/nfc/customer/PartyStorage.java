@@ -32,7 +32,7 @@ import android.util.Log;
 public class PartyStorage {
     private static final String PREF_PARTY_SIZE = "party_size";
     private static final String DEFAULT_PARTY_SIZE = "1";
-    private static final String TAG = "PartySize";
+    private static final String TAG = "PartyStorage";
     private static String sParty = null;
     private static final Object sPartyLock = new Object();
 

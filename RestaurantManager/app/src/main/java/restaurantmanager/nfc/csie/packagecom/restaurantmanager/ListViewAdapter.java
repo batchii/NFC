@@ -86,7 +86,6 @@ public class ListViewAdapter extends ArrayAdapter {
                 //delete upon press
                 values.remove(position);
                 update();
-
             }
         });
 

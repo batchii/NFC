@@ -16,7 +16,7 @@ import com.csie.nfc.customer.common.logger.MessageOnlyLogFilter;
 
 public class CustomerEdit extends FragmentActivity {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "CustomerEdit";
 
 
     @Override

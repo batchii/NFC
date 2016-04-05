@@ -34,7 +34,7 @@ import java.util.Arrays;
 public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
     private static final String TAG = "RestaurantCard";
     // AID for our loyalty card service.
-    private static final String SAMPLE_LOYALTY_CARD_AID = "F222222222";
+    private static final String SAMPLE_LOYALTY_CARD_AID = "F222222221";
     // ISO-DEP command HEADER for selecting an AID.
     // Format: [Class | Instruction | Parameter 1 | Parameter 2]
     private static final String SELECT_APDU_HEADER = "00A40400";
@@ -87,6 +87,7 @@ public class LoyaltyCardReader implements NfcAdapter.ReaderCallback {
                 int resultLength = result.length;
                 byte[] statusWord = {result[resultLength-2], result[resultLength-1]};
                 byte[] payload = Arrays.copyOf(result, resultLength-2);
+                Log.i(TAG, "status: " + ByteArrayToHexString(statusWord));
                 if (Arrays.equals(SELECT_OK_SW, statusWord)) {
                     // The remote NFC device will immediately respond with its stored account number
                     String accountNumber = new String(payload, "UTF-8");
