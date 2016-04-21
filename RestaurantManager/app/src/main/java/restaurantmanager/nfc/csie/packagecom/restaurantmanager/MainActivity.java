@@ -29,7 +29,11 @@ import android.widget.ArrayAdapter;
 import android.nfc.NfcAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import restaurantmanager.nfc.csie.packagecom.restaurantmanager.database.Customer;
+import restaurantmanager.nfc.csie.packagecom.restaurantmanager.database.DatabaseHandler;
 
 
 public class MainActivity extends AppCompatActivity implements LoyaltyCardReader.AccountCallback{
@@ -57,10 +61,29 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         mLoyaltyCardReader = new LoyaltyCardReader(this);
         enableReaderMode();
 
+        DatabaseHandler db = new DatabaseHandler(this);
 
-        //Checks if NFC capabilities are there.
-        //Commented out for testing purposes
-        //ie. emulators can't do jack shit with NFC
+/**
+ * CRUD Operations
+ * */
+        // Inserting Contacts
+        Log.d("Insert: ", "Inserting ..");
+        db.addCustomer(new Customer("Ravi", "9100000000"));
+        db.addCustomer(new Customer("Srinivas", "9199999999"));
+        db.addCustomer(new Customer("Tommy", "9522222222"));
+        db.addCustomer(new Customer("Karthik", "9533333333"));
+
+        // Reading all contacts
+        Log.d("Reading: ", "Reading all contacts..");
+        List<Customer> contacts = db.getAllCustomers();
+
+        for (Customer cn : contacts) {
+            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+            //Checks if NFC capabilities are there.
+            //Commented out for testing purposes
+            //ie. emulators can't do jack shit with NFC
 //        if (mNfcAdapter == null) {
 //            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
 //            finish();
@@ -76,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 //                        .setAction("Action", null).show();
 //            }
 //        });
+        }
     }
 
     @Override
