@@ -9,9 +9,12 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -47,10 +50,34 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
     public static int READER_FLAGS =
             NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
+
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initToolBar();
+
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        addDrawerItems();
+        // set mDrawerLayout and mActivityTitle in onCreate()
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+        }
+        setupDrawer();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         enableReaderMode();
 
         DatabaseHandler db = new DatabaseHandler(this);
-
 /**
  * CRUD Operations
  * */
@@ -101,6 +127,29 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 //        });
         }
     }
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,10 +169,57 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         if (id == R.id.action_settings) {
             return true;
         }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+    public void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_title);
 
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_drawer);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+        );
+    }
+
+    private void addDrawerItems() {
+        String[] osArray = { "Customer List", "Promo Message", "Customer Infos"};
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+
+                switch(position){
+                    case 0:
+                        break;
+                    case 1:
+                        Intent case1 = new Intent(getBaseContext(), PromotionalActivity.class);
+                        startActivity(case1);
+                        break;
+                    case 2:
+                        Intent case2 = new Intent(getBaseContext(), DatabaseViewerActivity.class);
+                        startActivity(case2);
+                        break;
+                    default:
+                        Log.d("FUCK", "hi");
+                        break;
+                }
+            }
+        });
+    }
 
 
     private void setupList(ListView listOfCustomers) {
@@ -164,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
             {
                 int pos=position+1;
                 Toast.makeText(MainActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
+
             }
 
         });

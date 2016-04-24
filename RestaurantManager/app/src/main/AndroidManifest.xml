@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="restaurantmanager.nfc.csie.packagecom.restaurantmanager">
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +25,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppThemeCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,11 +34,19 @@
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
-
         </activity>
+        <activity
+            android:name=".DatabaseViewerActivity"
+            android:label="@string/title_activity_database_viewer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".PromotionalActivity"
+            android:label="@string/title_activity_promotional_editor"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

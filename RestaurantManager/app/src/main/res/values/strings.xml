@@ -3,5 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="account_number">Account Number</string>
     <string name="card_title">Sample Loyalty Card</string>
-
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="toolbar_title">QuickSeat</string>
+    <string name="title_activity_database_viewer">DatabaseViewerActivity</string>
+    <string name="title_activity_promotional_editor">PromotionalEditorActivity</string>
 </resources>
