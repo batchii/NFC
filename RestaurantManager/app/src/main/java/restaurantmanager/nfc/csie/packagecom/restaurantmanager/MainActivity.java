@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
     private String mActivityTitle;
     Toolbar toolbar;
     DatabaseHandler db;
+
+    private String extrapromo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,12 +210,12 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
 
-                switch(position){
+                switch (position) {
                     case 0:
                         break;
                     case 1:
                         Intent case1 = new Intent(getBaseContext(), PromotionalActivity.class);
-                        startActivity(case1);
+                        startActivityForResult(case1, 1);
                         break;
                     case 2:
                         Intent case2 = new Intent(getBaseContext(), DatabaseViewerActivity.class);
@@ -224,6 +227,20 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //result code equals 0, should equal -1. data is being passed correctly, could be emulator issue.
+        if ( resultCode == RESULT_OK ) {
+            extrapromo = data.getStringExtra("PROMO");
+//            System.out.println("EXTRA PROMO HERE " + extrapromo);
+            custom.setMessage(extrapromo);
+//            System.out.println("EXTRA PROMO HERE " + extrapromo);
+        } else {
+            custom.setMessage("");
+        }
     }
 
 
@@ -258,12 +275,10 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         custom = new ListViewAdapter(this, R.layout.listcolumns, list);
         listOfCustomers.setAdapter(custom);
 //        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
-        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
-            {
-                int pos=position+1;
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                int pos = position + 1;
                 Toast.makeText(MainActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
 
             }

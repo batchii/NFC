@@ -27,6 +27,8 @@ public class ListViewAdapter extends ArrayAdapter {
     TextView txt3;
     Context c; //for debugging
 
+    String message = "Your table is ready!";
+
     //need Button
 
     public ListViewAdapter(Context context, int textViewResourceId, ArrayList<String[]> firstrow) {
@@ -34,6 +36,15 @@ public class ListViewAdapter extends ArrayAdapter {
         this.c = context; //for debugging
         this.values = firstrow;
 //        Toast.makeText(this.c, "In ListViewAdapter constructor", Toast.LENGTH_LONG).show();
+    }
+
+    public void setMessage( String promo ) {
+//        System.out.println("PROMO HERE " + promo);
+        this.message = this.message + "\n" + promo;
+    }
+
+    public String getMessage() {
+        return this.message;
     }
 
     @Override
@@ -95,7 +106,9 @@ public class ListViewAdapter extends ArrayAdapter {
     private void sendSMS(String phoneString) {
 
         String phoneNo = phoneString;
-        String message = "Your table is ready!";
+//        String message = "Your table is ready!";
+
+//        System.out.println(" MESSAGE HERE " + message);
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
