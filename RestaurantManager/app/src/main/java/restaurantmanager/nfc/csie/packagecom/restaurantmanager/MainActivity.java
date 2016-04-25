@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
     Toolbar toolbar;
-
+    DatabaseHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,17 +84,17 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         listOfCustomers = (ListView) findViewById(R.id.listView);
 
-        this.setupList(listOfCustomers);
-        mLoyaltyCardReader = new LoyaltyCardReader(this);
-        enableReaderMode();
-
-        DatabaseHandler db = new DatabaseHandler(this);
+        db = new DatabaseHandler(this);
 /**
  * CRUD Operations
  * */
+        List<Customer> customerList = db.getAllCustomers();
+        for(Customer c : customerList){
+            db.deleteCustomer(c);
+        }
         // Inserting Contacts
         Log.d("Insert: ", "Inserting ..");
-        db.addCustomer(new Customer("Ravi", "9100000000"));
+        db.deleteCustomer(new Customer("Ravi", "9100000000"));
         db.addCustomer(new Customer("Srinivas", "9199999999"));
         db.addCustomer(new Customer("Tommy", "9522222222"));
         db.addCustomer(new Customer("Karthik", "9533333333"));
@@ -126,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 //            }
 //        });
         }
+
+        this.setupList(listOfCustomers);
+        mLoyaltyCardReader = new LoyaltyCardReader(this);
+        enableReaderMode();
+
     }
     private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
