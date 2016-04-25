@@ -9,6 +9,7 @@ public class Customer {
     int _id;
     String _name;
     String _phone_number;
+    int _no_visits;
 
     // Empty constructor
     public Customer(){
@@ -19,12 +20,21 @@ public class Customer {
         this._id = id;
         this._name = name;
         this._phone_number = _phone_number;
+        this._no_visits = 1;
     }
 
     // constructor
     public Customer (String name, String _phone_number){
         this._name = name;
         this._phone_number = _phone_number;
+        this._no_visits = 1;
+    }
+
+    public Customer (int id, String name, String _phone_number, int _no_visits){
+        this._id = id;
+        this._name = name;
+        this._phone_number = _phone_number;
+        this._no_visits = _no_visits;
     }
     // getting ID
     public int getID(){
@@ -55,4 +65,8 @@ public class Customer {
     public void setPhoneNumber(String phone_number){
         this._phone_number = phone_number;
     }
+
+    public int getNoVisits(){return this._no_visits;}
+
+    public void setNoVisits(int no_visits){this._no_visits = no_visits;}
 }

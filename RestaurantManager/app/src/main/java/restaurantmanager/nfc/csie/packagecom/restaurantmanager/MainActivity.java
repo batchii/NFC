@@ -334,6 +334,11 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
                 String[] toAdd = setData(first,second, third);
                 list.add(toAdd);
                 custom.notifyDataSetChanged();
+                if(db.getCustomerByPhoneNumber(third) == null){
+                    db.addCustomer(new Customer(first, third));
+                } else {
+                    db.increaseCustomerVisits(third);
+                }
             }
         });
     }

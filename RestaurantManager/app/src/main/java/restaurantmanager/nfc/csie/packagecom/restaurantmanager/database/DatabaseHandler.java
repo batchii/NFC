@@ -16,7 +16,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "customersManager";
@@ -28,6 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_PH_NO = "phone_number";
+    private static final String KEY_NO_VISITS = "num_visits";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CUSTOMERS_TABLE = "CREATE TABLE " + TABLE_CUSTOMERS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT" + ")";
+                + KEY_PH_NO + " TEXT," + KEY_NO_VISITS + " INTEGER" + ")";
         db.execSQL(CREATE_CUSTOMERS_TABLE);
     }
 
@@ -46,10 +47,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
+        db.execSQL("ALTER TABLE " + TABLE_CUSTOMERS + " ADD COLUMN " + KEY_NO_VISITS);
+                // no break, in case user is upgrading multiple versions
 
         // Create tables again
-        onCreate(db);
+        //onCreate(db);
     }
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
@@ -62,7 +64,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, customer.getName()); // Customer Name
         values.put(KEY_PH_NO, customer.getPhoneNumber()); // Customer Phone
-
+        values.put(KEY_NO_VISITS, 1);
         // Inserting Row
         db.insert(TABLE_CUSTOMERS, null, values);
         db.close(); // Closing database connection
@@ -83,6 +85,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return customer
         return customer;
     }
+
+    public Customer getCustomerByPhoneNumber(String pn){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + KEY_ID + " " + KEY_NAME + " " + KEY_PH_NO + " " + KEY_NO_VISITS
+                +" FROM " + DATABASE_NAME + " WHERE " + KEY_NAME + "=?", new String[] {pn} );
+        Customer customer = null;
+
+        if(cursor != null){
+            cursor.moveToFirst();
+            customer = new Customer(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
+
+        }
+
+        return customer;
+    }
+
 
     // Getting All Customers
     public List<Customer> getAllCustomers() {
@@ -140,5 +159,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return count
         return cursor.getCount();
+    }
+
+    public void increaseCustomerVisits(String phone_number) {
+        Customer c = getCustomerByPhoneNumber(phone_number);
+        c.setNoVisits(c.getNoVisits() + 1);
+        updateCustomer(c);
     }
 }
