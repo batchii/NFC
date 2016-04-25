@@ -29,10 +29,11 @@ public class PromotionalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText et = (EditText) findViewById(R.id.promotionalText);
                 String txt = et.getText().toString();
-                System.out.println(txt);
+//                System.out.println(txt);
 //                setPromotionString(txt);
                 Intent me = getIntent();
                 me.putExtra("PROMO", txt);
+                setResult(RESULT_OK, me);
                 finish();
             }
         });
@@ -41,15 +42,15 @@ public class PromotionalActivity extends AppCompatActivity {
 
     }
 
-    private void setPromotionString(String txt) {
-        System.out.println(this.promotion);
-        this.promotion = txt;
-    }
-
-    public String getPromotionalString() {
-        return this.promotion;
-
-    }
+//    private void setPromotionString(String txt) {
+//        System.out.println(this.promotion);
+//        this.promotion = txt;
+//    }
+//
+//    public String getPromotionalString() {
+//        return this.promotion;
+//
+//    }
 
 
 

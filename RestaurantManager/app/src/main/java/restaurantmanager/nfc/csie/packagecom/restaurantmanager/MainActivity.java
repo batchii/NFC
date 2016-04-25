@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         //result code equals 0, should equal -1. data is being passed correctly, could be emulator issue.
         if ( resultCode == RESULT_OK ) {
             extrapromo = data.getStringExtra("PROMO");
-            System.out.println("EXTRA PROMO HERE " + extrapromo);
+//            System.out.println("EXTRA PROMO HERE " + extrapromo);
             custom.setMessage(extrapromo);
 //            System.out.println("EXTRA PROMO HERE " + extrapromo);
         } else {
