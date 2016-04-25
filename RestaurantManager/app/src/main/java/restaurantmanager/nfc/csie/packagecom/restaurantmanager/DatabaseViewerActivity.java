@@ -38,14 +38,7 @@ public class DatabaseViewerActivity extends AppCompatActivity {
             Log.d("Customer", c.getName());
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
         listOfCustomers = (ListView) findViewById(R.id.listView);
         setupList(listOfCustomers);
@@ -83,7 +76,7 @@ public class DatabaseViewerActivity extends AppCompatActivity {
 //        }
 
 
-        custom = new ListViewAdapter(this, R.layout.listcolumns, list);
+        custom = new ListViewAdapter(this, R.layout.database_view_columns, list);
         listOfCustomers.setAdapter(custom);
 //        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
         listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
