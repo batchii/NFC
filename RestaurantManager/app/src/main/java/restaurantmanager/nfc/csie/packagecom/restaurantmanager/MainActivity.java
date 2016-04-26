@@ -88,6 +88,13 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         listOfCustomers = (ListView) findViewById(R.id.listView);
 
         db = new DatabaseHandler(this);
+
+        this.setupList(listOfCustomers);
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        listOfCustomers = (ListView) findViewById(R.id.listView);
+
+
 /**
  * CRUD Operations
  * */
@@ -130,9 +137,9 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 //        });
         }
 
-        this.setupList(listOfCustomers);
-        mLoyaltyCardReader = new LoyaltyCardReader(this);
-        enableReaderMode();
+//        this.setupList(listOfCustomers);
+//        mLoyaltyCardReader = new LoyaltyCardReader(this);
+//        enableReaderMode();
 
     }
     private void setupDrawer() {
@@ -262,15 +269,12 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         list.add(headers);
         list.add(test);
         list.add(setData("Alec", "2", "9086562784"));
-        //Get all information in String[]
-        //each entry in the list is a String[]
 
-        //CALL setData() here
-//        final ArrayList<String> list = new ArrayList<String>();
-//        for (int i = 0; i < list.size(); ++i) { //CHANGE THIS FOR LOOP AFTER I GET ALL THE NFC DATA!!!
-//            list.add(headers);
-//        }
-
+        //Add stuff from Database here
+        List<Customer> contacts = db.getAllCustomers();
+        for (Customer cn : contacts) {
+            list.add(setData(cn.getName(), "0", cn.getPhoneNumber()));
+        }
 
         custom = new ListViewAdapter(this, R.layout.listcolumns, list);
         listOfCustomers.setAdapter(custom);
