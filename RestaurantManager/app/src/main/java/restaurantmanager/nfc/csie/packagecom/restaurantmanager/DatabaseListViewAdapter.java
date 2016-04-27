@@ -1,0 +1,86 @@
+package restaurantmanager.nfc.csie.packagecom.restaurantmanager;
+
+/**
+ * Created by katie on 3/29/16.
+ */
+
+import android.app.Activity;
+import android.content.Context;
+import android.telephony.SmsManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+public class DatabaseListViewAdapter extends ArrayAdapter {
+
+    private ArrayList<String[]> values;
+    Activity activity;
+    TextView txt1;
+    TextView txt2;
+    TextView txt3;
+    Context c; //for debugging
+
+
+    //need Button
+
+    public DatabaseListViewAdapter(Context context, int textViewResourceId, ArrayList<String[]> firstrow) {
+        super(context, textViewResourceId);
+        this.c = context; //for debugging
+        this.values = firstrow;
+//        Toast.makeText(this.c, "In ListViewAdapter constructor", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public int getCount() {
+        return this.values.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.values.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+
+        View v = convertView;
+
+        if (v == null) {
+            LayoutInflater vi;
+            vi = LayoutInflater.from(getContext());
+            v = vi.inflate(R.layout.database_view_columns, null);
+        }
+
+        TextView nameTV = (TextView) v.findViewById(R.id.nameDB);
+        TextView partySizeTV = (TextView) v.findViewById(R.id.phoneNumber);
+        TextView noVisitTV = (TextView) v.findViewById(R.id.numVisits);
+        nameTV.setText(values.get(position)[0]);
+        partySizeTV.setText(values.get(position)[1]);
+        noVisitTV.setText(values.get(position)[2]);
+
+
+//        Toast.makeText(this.getContext(), values.get(position)[2], Toast.LENGTH_LONG).show();
+
+
+        return v;
+    }
+
+
+
+    private void update() {
+        notifyDataSetChanged();
+    }
+
+}

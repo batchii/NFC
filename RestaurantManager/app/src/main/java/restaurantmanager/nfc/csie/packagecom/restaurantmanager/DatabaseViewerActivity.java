@@ -22,7 +22,7 @@ import restaurantmanager.nfc.csie.packagecom.restaurantmanager.database.Database
 public class DatabaseViewerActivity extends AppCompatActivity {
     private ListView listOfCustomers;
     final ArrayList<String[]> list = new ArrayList<String[]>();
-    ListViewAdapter custom;
+    DatabaseListViewAdapter custom;
     DatabaseHandler db;
 
     @Override
@@ -40,7 +40,7 @@ public class DatabaseViewerActivity extends AppCompatActivity {
 
 
 
-        listOfCustomers = (ListView) findViewById(R.id.listView);
+        listOfCustomers = (ListView) findViewById(R.id.listView1);
         setupList(listOfCustomers);
     }
 
@@ -76,7 +76,7 @@ public class DatabaseViewerActivity extends AppCompatActivity {
 //        }
 
 
-        custom = new ListViewAdapter(this, R.layout.database_view_columns, list);
+        custom = new DatabaseListViewAdapter(this, R.layout.database_view_columns, list);
         listOfCustomers.setAdapter(custom);
 //        Toast.makeText(this, "In Main setupList", Toast.LENGTH_LONG).show();
         listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {

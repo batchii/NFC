@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
 
         this.setupList(listOfCustomers);
 
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        listOfCustomers = (ListView) findViewById(R.id.listView);
+//        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+//        listOfCustomers = (ListView) findViewById(R.id.listView);
 
 
 /**
@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
         }
 
 //        this.setupList(listOfCustomers);
-//        mLoyaltyCardReader = new LoyaltyCardReader(this);
-//        enableReaderMode();
+        mLoyaltyCardReader = new LoyaltyCardReader(this);
+        enableReaderMode();
 
     }
     private void setupDrawer() {
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -209,13 +209,13 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Customer List", "Promo Message", "Customer Infos"};
+        String[] osArray = { "Customer List", "Promo Message", "Customer Info"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
 
                 switch (position) {
                     case 0:
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 int pos = position + 1;
-                Toast.makeText(MainActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -331,21 +331,27 @@ public class MainActivity extends AppCompatActivity implements LoyaltyCardReader
             @Override
             public void run() {
                 Log.i("account: ", account);
-                    Scanner sc = new Scanner(account);
+                Scanner sc = new Scanner(account);
                 String first = sc.next();
                 String second = sc.next();
                 String third = sc.next();
                 String[] toAdd = setData(first,second, third);
-                list.add(toAdd);
-                custom.notifyDataSetChanged();
-                if(db.getCustomerByPhoneNumber(third) == null){
-                    db.addCustomer(new Customer(first, third));
-                } else {
-                    db.increaseCustomerVisits(third);
-                }
+                addCustomerToList(toAdd);
             }
         });
     }
+
+    public void addCustomerToList(String[] toAdd){
+        list.add(toAdd);
+        custom.notifyDataSetChanged();
+        if(db.getCustomerByPhoneNumber(toAdd[2]) == null){
+            db.addCustomer(new Customer(toAdd[0], toAdd[2]));
+        } else {
+            db.increaseCustomerVisits(toAdd[2]);
+        }
+    }
+
+
 
     //insert this string data into List HashMaps whatever,
     //then into a greater bigger list
